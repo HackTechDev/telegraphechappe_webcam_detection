@@ -57,7 +57,7 @@ while cap.isOpened():
             w, h = template.shape[::-1]
 
             res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
-            threshold = 0.8
+            threshold = 0.7
             loc = np.where( res >= threshold)
 
             print(loc)
@@ -72,7 +72,13 @@ while cap.isOpened():
             if flag == True:
                 print("log: " + f)
                 cv2.imwrite('detected.jpg',img_rgb)
-        
+                signal_dict = {"signal": f}
+                #path_json = '/home/pi/public_html/telegraphechappe_web/signal.json'
+                path_json = 'signal.json'
+                with open(path_json, 'w') as json_file:
+                    json.dump(signal_dict, json_file)
+                break                        
+
 
     if cv2.waitKey(40) == 27:
         break
