@@ -1,10 +1,10 @@
 Telegraphe de Chappe Webcam detection
 =====================================
 
-Arm Control
-===========
+Gesture Control
+===============
 
-Arduino
+The Arduino board controls the gesture of the Chappe telegraph.
 
 
 Sign Recognition
@@ -12,3 +12,5 @@ Sign Recognition
 
 Python: 3.6.9
 OpenCV Version: 4.3.0
+
+This part in Python/OpenCV read all gestures with a webcam.
