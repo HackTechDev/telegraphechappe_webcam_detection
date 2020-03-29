@@ -17,7 +17,6 @@ motionCounter = 0
 ret, frame1 = cap.read()
 ret, frame2 = cap.read()
 print(frame1.shape)
-
 while cap.isOpened():
     diff = cv2.absdiff(frame1, frame2)
     gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
@@ -48,8 +47,32 @@ while cap.isOpened():
     ret, frame2 = cap.read()
 
     if cv2.waitKey(40) == 100: # Key d
-        cv2.imwrite('motion.jpg', frame1)
         print('Motion')
+        cv2.imwrite('motion.jpg', frame1)
+        img_rgb = cv2.imread('motion.jpg')
+        img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
+
+        for f in glob.iglob("sign/*.jpg"):
+            template = cv2.imread(f, 0)
+            w, h = template.shape[::-1]
+
+            res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
+            threshold = 0.8
+            loc = np.where( res >= threshold)
+
+            print(loc)
+
+            flag = False
+            for pt in zip(*loc[::-1]):
+                if pt is not None:
+                    flag = True
+                    cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,255,255), 2)
+                    break
+
+            if flag == True:
+                print("log: " + f)
+                cv2.imwrite('detected.jpg',img_rgb)
+        
 
     if cv2.waitKey(40) == 27:
         break
