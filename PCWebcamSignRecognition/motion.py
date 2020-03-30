@@ -71,8 +71,10 @@ while cap.isOpened():
             if flag == True:
                 print("log: " + f)
                 cv2.imwrite('detected.jpg', img_rgb)
-                signal_dict = {"signal": f}
-                #path_json = '/home/pi/public_html/telegraphechappe_web/signal.json'
+
+                pointPos = f.find('.')
+                signalNumber = f[9:pointPos]     
+                signal_dict = {"signal": signalNumber}
                 path_json = 'signal.json'
                 with open(path_json, 'w') as json_file:
                     json.dump(signal_dict, json_file)
