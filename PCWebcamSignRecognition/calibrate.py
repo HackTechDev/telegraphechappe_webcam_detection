@@ -9,6 +9,10 @@ import glob
 cap = cv2.VideoCapture(0)
 overlay = cv2.imread('calibration/calibration.jpg')
 
+cap.set(3,640)
+cap.set(4,480)
+
+
 while True:
     ret, img_rgb = cap.read()
 
